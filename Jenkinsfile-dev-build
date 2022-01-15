@@ -18,7 +18,7 @@ pipeline {
 
     stage('Test') {
       steps {
-        echo 'No test as of now.'
+        echo "Version: $VERSION"
       }
     }
 
