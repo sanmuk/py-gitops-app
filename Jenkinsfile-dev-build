@@ -6,11 +6,6 @@ pipeline {
   }
 
   stages {
-    stage('SCM') {
-      steps {
-        git 'https://github.com/sanmuk/py-gitops-app.git'
-      }
-    }
 
     stage('Build') {
       steps {
