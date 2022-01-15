@@ -1,0 +1,31 @@
+pipeline {
+  agent any
+
+  tools {
+    maven 'maven'
+  }
+
+  stages {
+    stage('SCM') {
+      steps {
+        git 'https://github.com/sanmuk/py-gitops-app.git'
+      }
+    }
+
+    stage('Build') {
+      steps {
+        sh 'mvn clean package'
+      }
+    }
+
+    stage('Test') {
+      steps {
+        echo 'No test as of now.'
+      }
+    }
+
+    stage('Deploy') {
+      echo 'PASS'
+    }
+  }
+}
