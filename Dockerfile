@@ -5,11 +5,12 @@ WORKDIR /app
 
 RUN pip install flask && \
     apt update && \
-    apt install nginx -y
+    apt install nginx -y 
 
-ADD . /app
+ADD target/py-gitops-app-*.zip /app
 
-RUN rm -f /etc/nginx/sites-enabled/default && \
+RUN unzip /app/py-gitops-app-*.zip -d /app && \
+    rm -f /etc/nginx/sites-enabled/default && \
     cp /app/app.conf /etc/nginx/sites-enabled/
 
 EXPOSE 8080
