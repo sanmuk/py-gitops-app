@@ -30,15 +30,19 @@ pipeline {
 
     stage('Image') {
       steps {
-        dockerImage = docker.build 'sanmuk21/py-gitops-app' + ":$VERSION"
+        script {
+          dockerImage = docker.build 'sanmuk21/py-gitops-app' + ":$VERSION"
+        }
       }
     }
 
     stage('Push'){
       steps {
+        script {
           docker.withRegistry( '', 'dockerhub' ) {
             dockerImage.push()
           }
+        }
       }
     }
   }
