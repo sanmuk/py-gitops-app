@@ -5,10 +5,6 @@ pipeline {
     maven 'maven'
   }
 
-  environment {
-    VERSION = readMavenPom().getVersion()
-  }
-
   stages {
     stage('Build') {
       steps {
@@ -24,7 +20,8 @@ pipeline {
 
     stage('Deploy') {
       steps {
-        nexusArtifactUploader artifacts: [[artifactId: 'py-gitops-app', classifier: '', file: 'target/py-gitops-app-$VERSION.zip', type: 'zip']], credentialsId: 'nexus', groupId: 'com.sanmuk', nexusUrl: '192.168.56.102:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'snapshot', version: '$VERSION'
+        def pom = readMavenPom file: 'pom.xml'
+        nexusArtifactUploader artifacts: [[artifactId: 'py-gitops-app', classifier: '', file: 'target/py-gitops-app-${pom.version}.zip', type: 'zip']], credentialsId: 'nexus', groupId: 'com.sanmuk', nexusUrl: '192.168.56.102:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'snapshot', version: '${pom.version}'
       }
     }
   }
