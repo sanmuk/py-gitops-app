@@ -24,8 +24,5 @@ pipeline {
       }
     }
 
-    stage('Deploy') {
-      echo 'PASS'
-    }
   }
 }
