@@ -1,2 +1,2 @@
 # py-gitops-app
-Python Test Application 
+Python GitOps Test Application 
