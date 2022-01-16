@@ -28,22 +28,41 @@ pipeline {
       }
     }
 
-    stage('Image') {
+    stage('Image Unix') {
       steps {
         script {
-          dockerImage = docker.build 'sanmuk21/py-gitops-app' + ":$VERSION"
+          dockerImageU = docker.build 'sanmuk21/py-gitops-app' + ":$VERSION" "Dockerfile-Unix"
         }
       }
     }
 
-    stage('Push'){
+    stage('Push Unix'){
       steps {
         script {
           docker.withRegistry( 'https://registry-1.docker.io', 'dockerhub' ) {
-            dockerImage.push()
+            dockerImageU.push()
           }
         }
       }
     }
+
+    stage('Image Windows') {
+      steps {
+        script {
+          dockerImageW = docker.build 'sanmuk21/py-gitops-app-win' + ":$VERSION" "Dockerfile-Windows"
+        }
+      }
+    }
+
+    stage('Push Windows'){
+      steps {
+        script {
+          docker.withRegistry( 'https://registry-1.docker.io', 'dockerhub' ) {
+            dockerImageW.push()
+          }
+        }
+      }
+    }
+
   }
 }
